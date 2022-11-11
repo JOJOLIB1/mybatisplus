@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jjj.mybatisplus.mapper.AreaMapper">
+
+    <resultMap id="BaseResultMap" type="com.jjj.mybatisplus.pojo.Area">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="code" column="code" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="pCode" column="p_code" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,code,name,
+        p_code
+    </sql>
+    <select id="selectCodeAndNameAndPCodeByIdAndNameLikeOrderByCodeDesc" resultMap="BaseResultMap">
+        select code, name, p_code
+        from t_area
+        where id = #{id,jdbcType=NUMERIC}
+          AND name like #{name,jdbcType=VARCHAR}
+        order by code desc
+    </select>
+    <update id="updateNameAndPCodeByCodeBetween">
+        update t_area
+        set name   = #{name,jdbcType=VARCHAR},
+            p_code = #{pCode,jdbcType=NUMERIC}
+        where code between #{beginCode,jdbcType=INTEGER} and #{endCode,jdbcType=INTEGER}
+    </update>
+    <insert id="insertBatch">
+        insert into t_area(id,code,name,
+        p_code)
+        values
+        <foreach collection="areaCollection" item="item" separator=",">
+            (#{item.id,jdbcType=NUMERIC},#{item.code,jdbcType=NUMERIC},#{item.name,jdbcType=VARCHAR},
+            #{item.pCode,jdbcType=NUMERIC})
+        </foreach>
+    </insert>
+</mapper>

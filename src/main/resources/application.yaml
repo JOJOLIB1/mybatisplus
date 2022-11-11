@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    dynamic:
+#      primary: slave_1
+      strict: false
+      datasource:
+        master:
+          url: jdbc:mysql://101.43.91.248:3306/dep_db
+          username: root
+          password: Hello_world_123!!~~~
+        slave_1:
+          url: jdbc:mysql://101.43.91.248:3306/db_crm
+          username: root
+          password: Hello_world_123!!~~~
+
+#  datasource:
+#    username: root
+#    password: Hello_world_123!!~~~
+#    url: jdbc:mysql://101.43.91.248:3306/dep_db
+mybatis-plus:
+  type-aliases-package: com.jjj.mybatisplus.pojo
+  global-config:
+    db-config:
+      #雪花算法
+      id-type: assign_id
+      table-prefix: tbl_
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
